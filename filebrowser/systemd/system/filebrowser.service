@@ -1,0 +1,18 @@
+[Unit]
+Description=File Browser Process Manager
+Documentation=https://filebrowser.org
+After=network-online.target firewalld.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/filebrowser -c /etc/filebrowser/config.json
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/usr/bin/kill -s 9 filebrowser
+TimeoutSec=0
+RestartSec=2
+Restart=always
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
